@@ -3,11 +3,11 @@ import { use, useState } from "react";
 import useAuth from "../hooks/useAuth";
 
 export default function AuthForm() {
-  const { email, setEmail, password, setPassword, login } = useAuth();
+  const { email, setEmail, password, setPassword, postLogin } = useAuth();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    login(email, password);
+    postLogin(email, password);
   };
 
   return (
