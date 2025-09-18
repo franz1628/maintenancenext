@@ -1,4 +1,3 @@
-import { apiFetch } from "@/config/api";
 import { useEffect, useState } from "react";
 import BrandApi from "../services/brand.api";
 import { Brand, BrandCreate, BrandInitial } from "../types/brand.types";
@@ -15,7 +14,6 @@ export default function useBrand() {
         fetchBrands();
         
     }, []);
-
 
     return {
         model, 

@@ -1,24 +1,25 @@
 'use client';
 import Button from "@/components/ui/Button";
-import { Brand, BrandUpdate } from "../types/brand.types";
+import { Model, ModelUpdate } from "../types/model.types";
 
-interface BrandListProps {
-    models: Brand[];
-    onEdit: (id: number, model: BrandUpdate) => void;
+interface ModelListProps {
+    models: Model[];
+    onEdit: (id: number, model: ModelUpdate) => void;
     onDelete: (id: number) => void;
 }
 
-export default function BrandList(props: BrandListProps) {
+export default function ModelList(props: ModelListProps) {
     const {models, onEdit, onDelete} = props;
     return (
         <div>
-            <h2>Brand List</h2>
+            <h2>Model List</h2>
             <table className="min-w-full border-collapse border border-gray-200">
                 <thead>
                     <tr>
                         <th className="border border-gray-300 px-4 py-2">ID</th>
                         <th className="border border-gray-300 px-4 py-2">Name</th>  
                         <th className="border border-gray-300 px-4 py-2">Description</th>
+                        <th className="border border-gray-300 px-4 py-2">Brand</th>
                         <th className="border border-gray-300 px-4 py-2">State</th>
                         <th className="border border-gray-300 px-4 py-2">Actions</th>
                     </tr>
@@ -29,6 +30,7 @@ export default function BrandList(props: BrandListProps) {
                             <td className="border border-gray-300 px-4 py-2">{model.id}</td>
                             <td className="border border-gray-300 px-4 py-2">{model.name}</td>
                             <td className="border border-gray-300 px-4 py-2">{model.description}</td>
+                            <td className="border border-gray-300 px-4 py-2">{model.brand.name}</td>
                             <td className="border border-gray-300 px-4 py-2">
                                 {model.state === 1 ? <label className="text-green-500">Active</label> : <label className="text-red-500">Inactive</label>}
                             </td>
