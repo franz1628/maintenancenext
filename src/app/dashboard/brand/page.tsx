@@ -4,7 +4,6 @@ import BrandForm from "@/features/brand/components/BrandForm";
 import BrandList from "@/features/brand/components/BrandList";
 import BrandApi from "@/features/brand/services/brand.api";
 import { Brand, BrandCreate, BrandInitial, BrandUpdate } from "@/features/brand/types/brand.types";
-import { log } from "console";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
