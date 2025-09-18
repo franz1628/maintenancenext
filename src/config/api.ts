@@ -1,6 +1,14 @@
 import ENV from "@/env"
 import Swal from "sweetalert2";
 
+interface ErrorResponse{
+    type: string;
+    title: string;
+    status: number;
+    detail: string;
+    instance: string;
+}
+
 function getToken() {
   if (typeof window === "undefined") return null; // SSR
   return localStorage.getItem("token");
@@ -43,7 +51,6 @@ export async function apiFetch<T>(
     },
   });
 
-
   if (res.status === 401) {
    
     Swal.fire({
@@ -53,10 +60,16 @@ export async function apiFetch<T>(
     });
 
   }
-
+  
   if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(`API Error ${res.status}: ${errorText}`);
+    const resError: ErrorResponse = await res.json();
+
+    Swal.fire({
+      title: "Error",
+      text: `API Error ${res.status}: ${resError.detail}`,
+      icon: "error",
+    });
+    throw new Error(`APIg Error ${res.status}: ${resError.detail}`);
   }
 
   
