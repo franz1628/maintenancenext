@@ -2,8 +2,8 @@
 import Modal from "@/components/ui/Modal";
 import BrandApi from "@/features/brand/services/brand.api";
 import { Brand } from "@/features/brand/types/brand.types";
-import ModelForm from "@/features/model/components/ModelForm";
-import ModelList from "@/features/model/components/ModelList";
+import ModelForm from "@/features/model/components/form";
+import ModelList from "@/features/model/components/list";
 import ModelApi from "@/features/model/services/model.api";
 import { Model, ModelCreate, ModelInitial, ModelUpdate } from "@/features/model/types/model.types";
 import { useEffect, useState } from "react";

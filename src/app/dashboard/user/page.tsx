@@ -1,49 +1,53 @@
 'use client';
 import Modal from "@/components/ui/Modal";
-import BrandForm from "@/features/brand/components/form";
-
-import BrandList from "@/features/brand/components/list";
-import BrandApi from "@/features/brand/services/brand.api";
-import { Brand, BrandCreate, BrandInitial, BrandUpdate } from "@/features/brand/types/brand.types";
+import DocumentTypeApi from "@/features/document-type/services/document-type.api";
+import UserForm from "@/features/user/components/form";
+import UserList from "@/features/user/components/list";
+import UserApi from "@/features/user/services/user.api";
+import { User, UserCreate, UserInitial, UserUpdate } from "@/features/user/types/user.types";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
-export default  function BrandPage() {
-    const [models, setModels] = useState<Brand[]>([]);
+export default  function UserPage() {
+    const [models, setModels] = useState<User[]>([]);
     const [id, setId] = useState<number>(0);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [idDelete, setIdDelete] = useState<number>(0);
+    const [documentTypes, setDocumentTypes] = useState<any[]>([]);
 
     useEffect( () => {
         load();
     }, []);
 
     const load = async () => {
-        const data = await BrandApi().get();
+        const data = await UserApi().get();
+        const documentTypeData = await DocumentTypeApi().get();
+        
+        setDocumentTypes(documentTypeData);
         setModels(data);
     }
 
-    const [model, setModel] = useState<BrandCreate | BrandUpdate>(BrandInitial);
+    const [model, setModel] = useState<UserCreate | UserUpdate>(UserInitial);
 
-    const onSubmit = async (modelPa: BrandCreate | BrandUpdate) => {
+    const onSubmit = async (modelPa: UserCreate | UserUpdate) => {
         if(id){
-            const { created_at, updated_at, id, ...update } = modelPa as Brand;
-            await BrandApi().update(id, update);
+            const { created_at, updated_at, id, document_type, ...update } = modelPa as User;
+            await UserApi().update(id, update);
             Swal.fire({
                 title: "Success",
-                text: "Brand updated successfully",
+                text: "User updated successfully",
                 icon: "success",
             });
         } else {
-            await BrandApi().create(modelPa as BrandCreate);
+            await UserApi().create(modelPa as UserCreate);
             Swal.fire({
                 title: "Success",
-                text: "Brand created successfully",
+                text: "User created successfully",
                 icon: "success",
             });
         }
 
-        setModel(BrandInitial);
+        setModel(UserInitial);
         setId(0);
         load();
     }
@@ -64,10 +68,10 @@ export default  function BrandPage() {
         });
 
         if (result.isConfirmed) {
-            await BrandApi().deleteModel(id);
+            await UserApi().deleteModel(id);
             Swal.fire({
                 title: "Deleted!",
-                text: "Your brand has been deleted.",
+                text: "Your User has been deleted.",
                 icon: "success",
             });
             setIdDelete(0);
@@ -76,21 +80,21 @@ export default  function BrandPage() {
         }
     }
 
-    const onEdit = (id:number, model: BrandUpdate) => {
+    const onEdit = (id:number, model: UserUpdate) => {
         setId(id);
         setModel(model);
     }
 
     return (
         <div>
-            <h1 className="text-2xl font-bold">Brand Page</h1>
+            <h1 className="text-2xl font-bold">User Page</h1>
             <hr  className="my-4" />
             <div className="grid grid-cols-4 md:grid-cols-4 gap-4 mb-4">
                 <div>
-                    <BrandForm model={model} onSubmit={onSubmit} />
+                    <UserForm model={model} onSubmit={onSubmit} documentTypes={documentTypes} />
                 </div>
                 <div className="col-span-3">
-                    <BrandList models={models} onEdit={onEdit} onDelete={handleDelete} />
+                    <UserList models={models} onEdit={onEdit} onDelete={handleDelete} />
                 </div>
             </div>
 
