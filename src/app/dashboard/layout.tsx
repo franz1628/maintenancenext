@@ -20,6 +20,7 @@ export default function RootLayout({
                     <Link href="/dashboard/user" className="hover:underline">User</Link>
                     <Link href="/dashboard/vehicle" className="hover:underline">Vehicle</Link>
                     <Link href="/dashboard/tool-catalog" className="hover:underline">Tool Catalog</Link>
+                    <Link href="/dashboard/piece-catalog" className="hover:underline">Piece Catalog</Link>
                 </ul>
             </nav>
            
