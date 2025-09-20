@@ -18,6 +18,7 @@ export default function RootLayout({
                     <Link href="/dashboard/model" className="hover:underline">Model</Link>
                     <Link href="/dashboard/document-type" className="hover:underline">Document Type</Link>
                     <Link href="/dashboard/user" className="hover:underline">User</Link>
+                    <Link href="/dashboard/vehicle" className="hover:underline">Vehicle</Link>
                 </ul>
             </nav>
            
