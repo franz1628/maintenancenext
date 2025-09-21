@@ -1,18 +1,18 @@
 'use client';
 import Button from "@/components/ui/Button";
-import { UserCreate, UserUpdate } from "../types/user.types";
+import { MecanicCreate, MecanicUpdate } from "../types/mecanic.types";
 import { useEffect, useState } from "react";
 import { DocumentType } from "@/features/document-type/types/document-type.types";
 
-interface UserFormProps {
-    model: UserCreate | UserUpdate;
+interface MecanicFormProps {
+    model: MecanicCreate | MecanicUpdate;
     documentTypes: DocumentType[];
-    onSubmit: (model: UserCreate | UserUpdate) => void;
+    onSubmit: (model: MecanicCreate | MecanicUpdate) => void;
 }
 
-export default function UserForm(props: UserFormProps) {
+export default function MecanicForm(props: MecanicFormProps) {
     const { onSubmit, model, documentTypes } = props;
-    const [register, setRegister] = useState<UserCreate | UserUpdate>(model);
+    const [register, setRegister] = useState<MecanicCreate | MecanicUpdate>(model);
 
     useEffect(() => {
         setRegister(model);
@@ -25,7 +25,7 @@ export default function UserForm(props: UserFormProps) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Register User</h2>
+            <h2>Register Mecanic</h2>
             <input type="text" placeholder="Name" className="border p-2 mb-2 w-full" value={register?.name || ""} onChange={(e) => setRegister({ ...register, name: e.target.value })} />
             <input type="text" placeholder="Last Name" className="border p-2 mb-2 w-full" value={register?.last_name || ""} onChange={(e) => setRegister({ ...register, last_name: e.target.value })} />
             <input type="text" placeholder="Second Last Name" className="border p-2 mb-2 w-full" value={register?.second_last_name || ""} onChange={(e) => setRegister({ ...register, second_last_name: e.target.value })} />
@@ -46,7 +46,7 @@ export default function UserForm(props: UserFormProps) {
                 <option value="0">Inactive</option>
             </select>
 
-            <Button text={"Save User"} color="primary" type="submit" className="w-full"/>
+            <Button text={"Save Mecanic"} color="primary" type="submit" className="w-full"/>
         </form>
     );
 }

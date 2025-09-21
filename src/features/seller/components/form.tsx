@@ -1,18 +1,18 @@
 'use client';
 import Button from "@/components/ui/Button";
-import { UserCreate, UserUpdate } from "../types/user.types";
+import { SellerCreate, SellerUpdate } from "../types/seller.types";
 import { useEffect, useState } from "react";
 import { DocumentType } from "@/features/document-type/types/document-type.types";
 
-interface UserFormProps {
-    model: UserCreate | UserUpdate;
+interface SellerFormProps {
+    model: SellerCreate | SellerUpdate;
     documentTypes: DocumentType[];
-    onSubmit: (model: UserCreate | UserUpdate) => void;
+    onSubmit: (model: SellerCreate | SellerUpdate) => void;
 }
 
-export default function UserForm(props: UserFormProps) {
+export default function SellerForm(props: SellerFormProps) {
     const { onSubmit, model, documentTypes } = props;
-    const [register, setRegister] = useState<UserCreate | UserUpdate>(model);
+    const [register, setRegister] = useState<SellerCreate | SellerUpdate>(model);
 
     useEffect(() => {
         setRegister(model);
@@ -25,7 +25,7 @@ export default function UserForm(props: UserFormProps) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Register User</h2>
+            <h2>Register Seller</h2>
             <input type="text" placeholder="Name" className="border p-2 mb-2 w-full" value={register?.name || ""} onChange={(e) => setRegister({ ...register, name: e.target.value })} />
             <input type="text" placeholder="Last Name" className="border p-2 mb-2 w-full" value={register?.last_name || ""} onChange={(e) => setRegister({ ...register, last_name: e.target.value })} />
             <input type="text" placeholder="Second Last Name" className="border p-2 mb-2 w-full" value={register?.second_last_name || ""} onChange={(e) => setRegister({ ...register, second_last_name: e.target.value })} />
@@ -46,7 +46,7 @@ export default function UserForm(props: UserFormProps) {
                 <option value="0">Inactive</option>
             </select>
 
-            <Button text={"Save User"} color="primary" type="submit" className="w-full"/>
+            <Button text={"Save Seller"} color="primary" type="submit" className="w-full"/>
         </form>
     );
 }
