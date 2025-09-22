@@ -23,7 +23,7 @@ export async function login(data: LoginInput): Promise<AuthResponse> {
     body: JSON.stringify(data),
   });
 
-  localStorage.setItem("token", res.data.access_token);
+  localStorage.setItem("user", JSON.stringify(res.data));
   if (res.data.refreshToken) localStorage.setItem("refreshToken", res.data.refreshToken);
 
   return res;
