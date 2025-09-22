@@ -31,13 +31,7 @@ export default function ServiceDetailForm(props: ServiceDetailFormProps) {
     return (
         <form onSubmit={handleSubmit}>
             <h2 className="text-lg font-bold mb-4">Register ServiceDetail</h2>
-
-            <Select text="State" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
-                <option value="">State</option>
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
-            </Select>
-
+            
             <Select text="Service" value={register?.id_service?.toString() || ""} onChange={(e) => setRegister({ ...register, id_service: +e.target.value })}>
                 <option value="">Select Service</option>
                 {services.map((service) => (
@@ -57,6 +51,11 @@ export default function ServiceDetailForm(props: ServiceDetailFormProps) {
                 {mecanicans.map((mecanic) => (
                     <option key={mecanic.id} value={mecanic.id}>{mecanic.name + " " + mecanic.last_name + " " + mecanic.second_last_name}</option>
                 ))}
+            </Select>
+
+            <Select text="State" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
             </Select>
 
             <Button text={"ServiceDetail"} color="primary" type="submit" className="w-full"/>

@@ -44,7 +44,7 @@ export default  function ServiceDetailPage() {
 
     const onSubmit = async (modelPa: ServiceDetailCreate | ServiceDetailUpdate) => {
         if(id){
-            const { created_at, updated_at, id, ...update } = modelPa as ServiceDetail;
+            const { created_at, updated_at, id, service,service_detail_catalog,mecanic, ...update } = modelPa as ServiceDetail;
             await ServiceDetailApi().update(id, update);
             Swal.fire({
                 title: "Success",
