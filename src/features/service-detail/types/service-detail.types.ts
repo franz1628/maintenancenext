@@ -1,3 +1,7 @@
+import { Mecanic } from "@/features/mecanic/types/mecanic.types";
+import { ServiceDetailCatalog } from "@/features/service-detail-catalog/types/service-detail-catalog.types";
+import { Service } from "@/features/service/types/service.types";
+
 export interface ServiceDetail {
     id: number;
     id_service: number;
@@ -12,7 +16,9 @@ export interface ServiceDetail {
     state: number;
     created_at: string;
     updated_at: string;
-
+    service: Service;
+    service_detail_catalog: ServiceDetailCatalog;
+    mecanic: Mecanic;
 }
 
 export const ServiceDetailInitial: ServiceDetailCreate = {
@@ -28,7 +34,7 @@ export const ServiceDetailInitial: ServiceDetailCreate = {
     state: 1,
 };
 
-export type ServiceDetailCreate = Omit<ServiceDetail, 'id' | 'created_at' | 'updated_at'>;
+export type ServiceDetailCreate = Omit<ServiceDetail, 'id' | 'created_at' | 'updated_at' | 'service' | 'service_detail_catalog' | 'mecanic'>;
  
 export type ServiceDetailUpdate = Partial<ServiceDetailCreate>;
 

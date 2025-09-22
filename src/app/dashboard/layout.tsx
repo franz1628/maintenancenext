@@ -43,6 +43,7 @@ export default function RootLayout({
                 <li><Link href="/dashboard/service-catalog" className="block px-4 py-2 text-sm hover:bg-gray-100">Service Catalog</Link></li>
                 <li><Link href="/dashboard/service-detail-catalog" className="block px-4 py-2 text-sm hover:bg-gray-100">Service Detail Catalog</Link></li>
                 <li><Link href="/dashboard/service" className="block px-4 py-2 text-sm hover:bg-gray-100">Service</Link></li>
+                <li><Link href="/dashboard/service-detail" className="block px-4 py-2 text-sm hover:bg-gray-100">Service Detail</Link></li>
               </ul>
             </div>
           </div>

@@ -3,12 +3,12 @@ import {  ServiceDetailCreate, ServiceDetailListResponse, ServiceDetailResponse,
 
 export default function ServiceDetailApi() {
     const get = async () => {
-        const response = await apiFetch<ServiceDetailListResponse>("/ServiceDetail");
+        const response = await apiFetch<ServiceDetailListResponse>("/service-detail");
         return response.data;
     };
 
     const create = async (model: ServiceDetailCreate) => {
-        const response = await apiFetch<ServiceDetailResponse>("/ServiceDetail", {
+        const response = await apiFetch<ServiceDetailResponse>("/service-detail", {
             method: "POST",
             body: JSON.stringify(model)
         });
@@ -16,7 +16,7 @@ export default function ServiceDetailApi() {
     };
 
     const update = async (id: number, model: ServiceDetailUpdate) => {
-        const response = await apiFetch<ServiceDetailResponse>(`/ServiceDetail/${id}`, {
+        const response = await apiFetch<ServiceDetailResponse>(`/service-detail/${id}`, {
             method: "PATCH",
             body: JSON.stringify(model)
         });
@@ -24,7 +24,7 @@ export default function ServiceDetailApi() {
     };
 
     const deleteModel = async (id: number) => {
-        const response = await apiFetch<ServiceDetailResponse>(`/ServiceDetail/${id}`, {
+        const response = await apiFetch<ServiceDetailResponse>(`/service-detail/${id}`, {
             method: "DELETE"
         });
 
