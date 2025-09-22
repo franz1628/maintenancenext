@@ -1,10 +1,13 @@
+'use client';
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter();
   return (
 
     <div>
@@ -46,6 +49,14 @@ export default function RootLayout({
                 <li><Link href="/dashboard/service-detail" className="block px-4 py-2 text-sm hover:bg-gray-100">Service Detail</Link></li>
               </ul>
             </div>
+          </div>
+
+          <div className="inline-block ml-4 cursor-pointer hover:underline" onClick={() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("refreshToken");
+            router.push("/login");
+          }}>
+            Cerrar sesión
           </div>
         </nav>
 
