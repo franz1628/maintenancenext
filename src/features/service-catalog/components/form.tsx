@@ -2,6 +2,8 @@
 import Button from "@/components/ui/Button";
 import { ServiceCatalogCreate, ServiceCatalogUpdate } from "../types/service-catalog.types";
 import { useEffect, useState } from "react";
+import Input from "@/components/ui/Input";
+import Select from "@/components/ui/Select";
 
 interface ServiceCatalogFormProps {
     model: ServiceCatalogCreate | ServiceCatalogUpdate;
@@ -23,18 +25,18 @@ export default function ServiceCatalogForm(props: ServiceCatalogFormProps) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Register ServiceCatalog</h2>
-            <input type="text" placeholder="ServiceCatalog Name" className="border p-2 mb-2 w-full" value={register?.name || ""} onChange={(e) => setRegister({ ...register, name: e.target.value })} />
-            <input type="text" placeholder="ServiceCatalog Description" className="border p-2 mb-2 w-full" value={register?.description || ""} onChange={(e) => setRegister({ ...register, description: e.target.value })} />
-            <input type="number" step="0.01" placeholder="ServiceCatalog Price" className="border p-2 mb-2 w-full" value={register?.price || 0} onChange={(e) => setRegister({ ...register, price: +e.target.value })} />
-            <input type="text" placeholder="ServiceCatalog Duration (minutes)" className="border p-2 mb-2 w-full" value={register?.duration_minutes || 0} onChange={(e) => setRegister({ ...register, duration_minutes: +e.target.value })} />
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
+            <h2 className="text-lg font-bold mb-4">Register ServiceCatalog</h2>
+            <Input text="Name" value={register?.name || ""} onChange={(e) => setRegister({ ...register, name: e.target.value })} />
+            <Input text="Description" value={register?.description || ""} onChange={(e) => setRegister({ ...register, description: e.target.value })} />
+            <Input step="0.01" text="Price" value={register?.price || 0} onChange={(e) => setRegister({ ...register, price: +e.target.value })} />
+            <Input text="Duration (minutes)" value={register?.duration_minutes || 0} onChange={(e) => setRegister({ ...register, duration_minutes: +e.target.value })} />
+            <Select text="State" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
                 <option value="">State</option>
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>
-            </select>
+            </Select>
 
-            <Button text={"Save ServiceCatalog"} color="primary" type="submit" className="w-full"/>
+            <Button text={"ServiceCatalog"} color="primary" type="submit" className="w-full"/>
         </form>
     );
 }

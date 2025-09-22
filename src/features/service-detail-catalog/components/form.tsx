@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { PieceCatalog } from "@/features/piece-catalog/types/piece-catalog.types";
 import { ToolCatalog } from "@/features/tool-catalog/types/tool-catalog.types";
 import { ServiceCatalog } from "@/features/service-catalog/types/service-catalog.types";
+import Input from "@/components/ui/Input";
+import Select from "@/components/ui/Select";
 
 interface ServiceDetailCatalogFormProps {
     model: ServiceDetailCatalogCreate | ServiceDetailCatalogUpdate;
@@ -29,36 +31,37 @@ export default function ServiceDetailCatalogForm(props: ServiceDetailCatalogForm
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Register ServiceDetailCatalog</h2>
-            <input type="text" placeholder="ServiceDetailCatalog Description" className="border p-2 mb-2 w-full" value={register?.description || ""} onChange={(e) => setRegister({ ...register, description: e.target.value })} />
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
-                <option value="">State</option>
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
-            </select>
+            <h2 className="text-lg font-bold mb-4">Register ServiceDetailCatalog</h2>
+            <Input type="text" text="Description" className="border p-2 mb-2 w-full" value={register?.description || ""} onChange={(e) => setRegister({ ...register, description: e.target.value })} />
+            
 
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.id_service_catalog?.toString() || ""} onChange={(e) => setRegister({ ...register, id_service_catalog: +e.target.value })}>
+            <Select text="Service Catalog" value={register?.id_service_catalog?.toString() || ""} onChange={(e) => setRegister({ ...register, id_service_catalog: +e.target.value })}>
                 <option value="">Select Service Catalog</option>
                 {props.serviceCatalogs.map((serviceCatalog) => (
                     <option key={serviceCatalog.id} value={serviceCatalog.id}>{serviceCatalog.name}</option>
                 ))}
-            </select>
+            </Select>
 
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.id_piece_catalog?.toString() || ""} onChange={(e) => setRegister({ ...register, id_piece_catalog: +e.target.value })}>
+            <Select text="Piece Catalog" value={register?.id_piece_catalog?.toString() || ""} onChange={(e) => setRegister({ ...register, id_piece_catalog: +e.target.value })}>
                 <option value="">Select Piece Catalog</option>
                 {props.pieceCatalogs.map((pieceCatalog) => (
                     <option key={pieceCatalog.id} value={pieceCatalog.id}>{pieceCatalog.name}</option>
                 ))}
-            </select>
-            
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.id_tool_catalog?.toString() || ""} onChange={(e) => setRegister({ ...register, id_tool_catalog: +e.target.value })}>
+            </Select>
+
+            <Select text="Tool Catalog" value={register?.id_tool_catalog?.toString() || ""} onChange={(e) => setRegister({ ...register, id_tool_catalog: +e.target.value })}>
                 <option value="">Select Tool Catalog</option>
                 {props.toolCatalogs.map((toolCatalog) => (
                     <option key={toolCatalog.id} value={toolCatalog.id}>{toolCatalog.name}</option>
                 ))}
-            </select>
+            </Select>
 
-            <Button text={"Save ServiceDetailCatalog"} color="primary" type="submit" className="w-full"/>
+            <Select text="State" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+            </Select>
+
+            <Button text={"ServiceDetailCatalog"} color="primary" type="submit" className="w-full"/>
         </form>
     );
 }

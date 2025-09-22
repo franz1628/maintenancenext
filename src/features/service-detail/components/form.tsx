@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Service } from "@/features/service/types/service.types";
 import { ServiceDetailCatalog } from "@/features/service-detail-catalog/types/service-detail-catalog.types";
 import { Mecanic } from "@/features/mecanic/types/mecanic.types";
+import Select from "@/components/ui/Select";
 
 interface ServiceDetailFormProps {
     model: ServiceDetailCreate | ServiceDetailUpdate;
@@ -29,36 +30,36 @@ export default function ServiceDetailForm(props: ServiceDetailFormProps) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Register ServiceDetail</h2>
-            
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
+            <h2 className="text-lg font-bold mb-4">Register ServiceDetail</h2>
+
+            <Select text="State" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
                 <option value="">State</option>
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>
-            </select>
+            </Select>
 
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.id_service?.toString() || ""} onChange={(e) => setRegister({ ...register, id_service: +e.target.value })}>
+            <Select text="Service" value={register?.id_service?.toString() || ""} onChange={(e) => setRegister({ ...register, id_service: +e.target.value })}>
                 <option value="">Select Service</option>
                 {services.map((service) => (
                     <option key={service.id} value={service.id}>{service.id}</option>
                 ))}
-            </select>
+            </Select>
 
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.id_service_detail_catalog?.toString() || ""} onChange={(e) => setRegister({ ...register, id_service_detail_catalog: +e.target.value })}>
+            <Select text="Service Detail Catalog" value={register?.id_service_detail_catalog?.toString() || ""} onChange={(e) => setRegister({ ...register, id_service_detail_catalog: +e.target.value })}>
                 <option value="">Select Service Detail Catalog</option>
                 {serviceDetailCatalogs.map((catalog) => (
                     <option key={catalog.id} value={catalog.id}>{catalog.description}</option>
                 ))}
-            </select>
+            </Select>
 
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.id_mecanic?.toString() || ""} onChange={(e) => setRegister({ ...register, id_mecanic: +e.target.value })}>
+            <Select text="Mecanic" value={register?.id_mecanic?.toString() || ""} onChange={(e) => setRegister({ ...register, id_mecanic: +e.target.value })}>
                 <option value="">Select Mecanic</option>
                 {mecanicans.map((mecanic) => (
                     <option key={mecanic.id} value={mecanic.id}>{mecanic.name + " " + mecanic.last_name + " " + mecanic.second_last_name}</option>
                 ))}
-            </select>
+            </Select>
 
-            <Button text={"Save ServiceDetail"} color="primary" type="submit" className="w-full"/>
+            <Button text={"ServiceDetail"} color="primary" type="submit" className="w-full"/>
         </form>
     );
 }

@@ -85,11 +85,11 @@ export default  function BrandPage() {
         <div>
             <h1 className="text-2xl font-bold">Brand Page</h1>
             <hr  className="my-4" />
-            <div className="grid grid-cols-4 md:grid-cols-4 gap-4 mb-4">
-                <div>
+            <div className="grid grid-cols-12 md:grid-cols-12 gap-2 mb-4">
+                <div className="col-span-4">
                     <BrandForm model={model} onSubmit={onSubmit} />
                 </div>
-                <div className="col-span-3">
+                <div className="col-span-8">
                     <BrandList models={models} onEdit={onEdit} onDelete={handleDelete} />
                 </div>
             </div>
