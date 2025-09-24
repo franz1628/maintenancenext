@@ -5,11 +5,16 @@ interface ButtonProps {
     onClick?: () => void;
     onSubmit?: () => void;
     className?: string;
+    disabled?: boolean;
 }
 
-export default function Button({ text, color, type = "button", onClick, onSubmit, className }: ButtonProps) {
+export default function Button({ text, color, type = "button", onClick, onSubmit, className, disabled }: ButtonProps) {
 
     let buttonClassName = 'text-white px-4 py-2 rounded hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer';
+
+    if (disabled) {
+        buttonClassName += ' bg-gray-400 cursor-not-allowed';
+    }
 
     if (color === 'primary') {
         buttonClassName += ' bg-blue-500 hover:bg-blue-600';
@@ -25,7 +30,7 @@ export default function Button({ text, color, type = "button", onClick, onSubmit
         buttonClassName += ' bg-gray-500 hover:bg-gray-600';
     }
     return (
-        <button className={buttonClassName + ' ' + className} onClick={onClick} type={type} onSubmit={onSubmit}>
+        <button className={buttonClassName + ' ' + className} onClick={onClick} type={type} onSubmit={onSubmit} disabled={disabled}>
             {text}
         </button>
     );

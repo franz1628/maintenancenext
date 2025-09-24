@@ -8,10 +8,11 @@ import Select from "@/components/ui/Select";
 interface BrandFormProps {
     model: BrandCreate | BrandUpdate;
     onSubmit: (model: BrandCreate | BrandUpdate) => void;
+    isLoading: boolean;
 }
 
 export default function BrandForm(props: BrandFormProps) {
-    const { onSubmit, model } = props;
+    const { onSubmit, model, isLoading } = props;
     const [register, setRegister] = useState<BrandCreate | BrandUpdate>(model);
 
     useEffect(() => {
@@ -34,7 +35,7 @@ export default function BrandForm(props: BrandFormProps) {
                 <option value="0">Inactive</option>
             </Select>
 
-            <Button text={"Save"} color="primary" type="submit" className="w-full"/>
+            <Button text={isLoading ? "Saving..." : "Save"} color="primary" type="submit" className="w-full" disabled={isLoading}/>
         </form>
     );
 }
