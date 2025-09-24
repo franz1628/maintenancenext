@@ -4,6 +4,8 @@ import { VehicleCreate, VehicleUpdate } from "../types/vehicle.types";
 import { useEffect, useState } from "react";
 import { User } from "@/features/user/types/user.types";
 import { Model } from "@/features/model/types/model.types";
+import Input from "@/components/ui/Input";
+import Select from "@/components/ui/Select";
 
 interface VehicleFormProps {
     model: VehicleCreate | VehicleUpdate;
@@ -27,32 +29,31 @@ export default function VehicleForm(props: VehicleFormProps) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Register Vehicle</h2>
-            <input type="text" placeholder="Vehicle Plate" className="border p-2 mb-2 w-full" value={register?.plate || ""} onChange={(e) => setRegister({ ...register, plate: e.target.value })} />
-            <input type="text" placeholder="Vehicle Color" className="border p-2 mb-2 w-full" value={register?.color || ""} onChange={(e) => setRegister({ ...register, color: e.target.value })} />
+            <h2 className="text-lg font-bold mb-4">Register Vehicle</h2>
+            <Input type="text" text="Vehicle Plate" value={register?.plate || ""} onChange={(e) => setRegister({ ...register, plate: e.target.value })} />
+            <Input type="text" text="Vehicle Color" value={register?.color || ""} onChange={(e) => setRegister({ ...register, color: e.target.value })} />
 
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.id_user?.toString() || ""} onChange={(e) => setRegister({ ...register, id_user: +e.target.value })}>
+            <Select text="User" value={register?.id_user?.toString() || ""} onChange={(e) => setRegister({ ...register, id_user: +e.target.value })}>
                 <option value="">Select User</option>
                 {users.map((user) => (
                     <option key={user.id} value={user.id}>{user.name}</option>
                 ))}
-            </select>
+            </Select>
 
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.id_model?.toString() || ""} onChange={(e) => setRegister({ ...register, id_model: +e.target.value })}>
+            <Select text="Model" value={register?.id_model?.toString() || ""} onChange={(e) => setRegister({ ...register, id_model: +e.target.value })}>
                 <option value="">Select Model</option>
                 {models.map((model) => (
                     <option key={model.id} value={model.id}>{model.name}</option>
                 ))}
-            </select>           
+            </Select>
 
-          
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
+            <Select text="State" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
                 <option value="">State</option>
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>
-            </select>
+            </Select>
 
-            <Button text={"Save Vehicle"} color="primary" type="submit" className="w-full"/>
+            <Button text={"Vehicle"} color="primary" type="submit" className="w-full"/>
         </form>
     );
 }

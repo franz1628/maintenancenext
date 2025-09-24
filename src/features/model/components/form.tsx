@@ -3,6 +3,8 @@ import Button from "@/components/ui/Button";
 import { ModelCreate, ModelUpdate } from "../types/model.types";
 import { useEffect, useState } from "react";
 import { Brand } from "@/features/brand/types/brand.types";
+import Input from "@/components/ui/Input";
+import Select from "@/components/ui/Select";
 
 interface ModelFormProps {
     model: ModelCreate | ModelUpdate;
@@ -25,26 +27,25 @@ export default function ModelForm(props: ModelFormProps) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Register Model</h2>
-            <input type="text" placeholder="Model Name" className="border p-2 mb-2 w-full" value={register?.name || ""} onChange={(e) => setRegister({ ...register, name: e.target.value })} />
-            <input type="text" placeholder="Model Description" className="border p-2 mb-2 w-full" value={register?.description || ""} onChange={(e) => setRegister({ ...register, description: e.target.value })} />
+            <h2 className="text-lg font-bold mb-4">Register Model</h2>
+            <Input text="Name" value={register?.name || ""} onChange={(e) => setRegister({ ...register, name: e.target.value })} />
+            <Input text="Description" value={register?.description || ""} onChange={(e) => setRegister({ ...register, description: e.target.value })} />
 
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.id_brand?.toString() || ""} onChange={(e) => setRegister({ ...register, id_brand: +e.target.value })}>
+            <Select text="Brand" value={register?.id_brand?.toString() || ""} onChange={(e) => setRegister({ ...register, id_brand: +e.target.value })}>
                 <option value="">Select Brand</option>
                 {brands.map((brand) => (
                     <option key={brand.id} value={brand.id}>
                         {brand.name}
                     </option>
                 ))}
-            </select>
+            </Select>
 
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
-                <option value="">State</option>
+            <Select text="State" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>
-            </select>
+            </Select>
 
-            <Button text={"Save Brand"} color="primary" type="submit" className="w-full"/>
+            <Button text={"Brand"} color="primary" type="submit" className="w-full"/>
         </form>
     );
 }

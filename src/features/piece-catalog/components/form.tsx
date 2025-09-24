@@ -2,6 +2,8 @@
 import Button from "@/components/ui/Button";
 import { PieceCatalogCreate, PieceCatalogUpdate } from "../types/piece-catalog.types";
 import { useEffect, useState } from "react";
+import Input from "@/components/ui/Input";
+import Select from "@/components/ui/Select";
 
 interface PieceCatalogFormProps {
     model: PieceCatalogCreate | PieceCatalogUpdate;
@@ -23,18 +25,17 @@ export default function PieceCatalogForm(props: PieceCatalogFormProps) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Register PieceCatalog</h2>
-            <input type="text" placeholder="Name" className="border p-2 mb-2 w-full" value={register?.name || ""} onChange={(e) => setRegister({ ...register, name: e.target.value })} />
-            <input type="text" placeholder="Description" className="border p-2 mb-2 w-full" value={register?.description || ""} onChange={(e) => setRegister({ ...register, description: e.target.value })} />
-            <input type="number" placeholder="Price" className="border p-2 mb-2 w-full" value={register?.price || ""} onChange={(e) => setRegister({ ...register, price: parseFloat(e.target.value) })} />
-            <input type="number" placeholder="Stock" className="border p-2 mb-2 w-full" value={register?.stock || ""} onChange={(e) => setRegister({ ...register, stock: +e.target.value })} />
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
-                <option value="">State</option>
+            <h2 className="text-lg font-bold mb-4">Register PieceCatalog</h2>
+            <Input text="Name" value={register?.name || ""} onChange={(e) => setRegister({ ...register, name: e.target.value })} />
+            <Input text="Description" value={register?.description || ""} onChange={(e) => setRegister({ ...register, description: e.target.value })} />
+            <Input text="Price" value={register?.price || ""} onChange={(e) => setRegister({ ...register, price: parseFloat(e.target.value) })} />
+            <Input text="Stock" value={register?.stock || ""} onChange={(e) => setRegister({ ...register, stock: +e.target.value })} />
+            <Select text="State" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>
-            </select>
+            </Select>
 
-            <Button text={"Save PieceCatalog"} color="primary" type="submit" className="w-full"/>
+            <Button text={"PieceCatalog"} color="primary" type="submit" className="w-full"/>
         </form>
     );
 }

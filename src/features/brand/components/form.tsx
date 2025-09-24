@@ -2,14 +2,17 @@
 import Button from "@/components/ui/Button";
 import { BrandCreate, BrandUpdate } from "../types/brand.types";
 import { useEffect, useState } from "react";
+import Input from "@/components/ui/Input";
+import Select from "@/components/ui/Select";
 
 interface BrandFormProps {
     model: BrandCreate | BrandUpdate;
     onSubmit: (model: BrandCreate | BrandUpdate) => void;
+    isLoading: boolean;
 }
 
 export default function BrandForm(props: BrandFormProps) {
-    const { onSubmit, model } = props;
+    const { onSubmit, model, isLoading } = props;
     const [register, setRegister] = useState<BrandCreate | BrandUpdate>(model);
 
     useEffect(() => {
@@ -23,16 +26,16 @@ export default function BrandForm(props: BrandFormProps) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Register Brand</h2>
-            <input type="text" placeholder="Brand Name" className="border p-2 mb-2 w-full" value={register?.name || ""} onChange={(e) => setRegister({ ...register, name: e.target.value })} />
-            <input type="text" placeholder="Brand Description" className="border p-2 mb-2 w-full" value={register?.description || ""} onChange={(e) => setRegister({ ...register, description: e.target.value })} />
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
-                <option value="">State</option>
+            <h2 className="text-lg font-bold mb-4">Register Brand</h2>
+            
+            <Input text="Name" value={register?.name || ""} onChange={(e) => setRegister({ ...register, name: e.target.value })}/>
+            <Input text="Description" value={register?.description || ""} onChange={(e) => setRegister({ ...register, description: e.target.value })}/>
+            <Select text="State" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>
-            </select>
+            </Select>
 
-            <Button text={"Save Brand"} color="primary" type="submit" className="w-full"/>
+            <Button text={isLoading ? "Saving..." : "Save"} color="primary" type="submit" className="w-full" disabled={isLoading}/>
         </form>
     );
 }

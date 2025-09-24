@@ -5,47 +5,53 @@ import BrandForm from "@/features/brand/components/form";
 import BrandList from "@/features/brand/components/list";
 import BrandApi from "@/features/brand/services/brand.api";
 import { Brand, BrandCreate, BrandInitial, BrandUpdate } from "@/features/brand/types/brand.types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 export default  function BrandPage() {
-    const [models, setModels] = useState<Brand[]>([]);
     const [id, setId] = useState<number>(0);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [idDelete, setIdDelete] = useState<number>(0);
-
-    useEffect( () => {
-        load();
-    }, []);
-
-    const load = async () => {
-        const data = await BrandApi().get();
-        setModels(data);
-    }
-
     const [model, setModel] = useState<BrandCreate | BrandUpdate>(BrandInitial);
+    const queryClient = useQueryClient();
+
+    const { data, isLoading, error } = useQuery({
+        queryKey: ['brands'],
+        queryFn: BrandApi().get
+    })
+
+    const saveMutation = useMutation({
+        mutationFn: (newBrand: BrandCreate | BrandUpdate) => {
+            if(id){
+                const { created_at, updated_at, id, ...update } = newBrand as Brand;
+                return BrandApi().update(id, update);
+            } else {
+                return BrandApi().create(newBrand as BrandCreate);
+            }       
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['brands'] });    
+        }
+    });
+
+    const deleteMutation = useMutation({
+        mutationFn: (id: number) => BrandApi().deleteModel(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['brands'] });    
+        }
+    });
 
     const onSubmit = async (modelPa: BrandCreate | BrandUpdate) => {
-        if(id){
-            const { created_at, updated_at, id, ...update } = modelPa as Brand;
-            await BrandApi().update(id, update);
-            Swal.fire({
-                title: "Success",
-                text: "Brand updated successfully",
-                icon: "success",
-            });
-        } else {
-            await BrandApi().create(modelPa as BrandCreate);
-            Swal.fire({
-                title: "Success",
-                text: "Brand created successfully",
-                icon: "success",
-            });
-        }
-
+        await saveMutation.mutateAsync(modelPa);
+        Swal.fire({
+            title: "Success",
+            text: id ? "Brand updated successfully" : "Brand created successfully",
+            icon: "success",
+        });
         setModel(BrandInitial);
         setId(0);
-        load();
+ 
     }
 
     const handleDelete = async (id: number) => {
@@ -64,7 +70,7 @@ export default  function BrandPage() {
         });
 
         if (result.isConfirmed) {
-            await BrandApi().deleteModel(id);
+            await deleteMutation.mutateAsync(id);
             Swal.fire({
                 title: "Deleted!",
                 text: "Your brand has been deleted.",
@@ -72,7 +78,7 @@ export default  function BrandPage() {
             });
             setIdDelete(0);
             setShowModal(false);
-            load();
+           
         }
     }
 
@@ -84,13 +90,13 @@ export default  function BrandPage() {
     return (
         <div>
             <h1 className="text-2xl font-bold">Brand Page</h1>
-            <hr  className="my-4" />
-            <div className="grid grid-cols-4 md:grid-cols-4 gap-4 mb-4">
-                <div>
-                    <BrandForm model={model} onSubmit={onSubmit} />
+            <hr  className="my-4" /> 
+            <div className="grid grid-cols-12 md:grid-cols-12 gap-2 mb-4">
+                <div className="col-span-4">
+                    <BrandForm model={model} onSubmit={onSubmit} isLoading={saveMutation.isPending} />
                 </div>
-                <div className="col-span-3">
-                    <BrandList models={models} onEdit={onEdit} onDelete={handleDelete} />
+                <div className="col-span-8">
+                    <BrandList models={data || []} onEdit={onEdit} onDelete={handleDelete} isLoading={isLoading} />
                 </div>
             </div>
 

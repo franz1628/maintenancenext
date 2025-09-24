@@ -3,6 +3,8 @@ import Button from "@/components/ui/Button";
 
 import { useEffect, useState } from "react";
 import { DocumentTypeCreate, DocumentTypeUpdate } from "../types/document-type.types";
+import Input from "@/components/ui/Input";
+import Select from "@/components/ui/Select";
 
 interface DocumentTypeFormProps {
     model: DocumentTypeCreate | DocumentTypeUpdate;
@@ -24,16 +26,15 @@ export default function DocumentTypeForm(props: DocumentTypeFormProps) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Register DocumentType</h2>
-            <input type="text" placeholder="DocumentType Name" className="border p-2 mb-2 w-full" value={register?.name || ""} onChange={(e) => setRegister({ ...register, name: e.target.value })} />
-            <input type="text" placeholder="DocumentType Description" className="border p-2 mb-2 w-full" value={register?.description || ""} onChange={(e) => setRegister({ ...register, description: e.target.value })} />
-            <select className="border p-2 mb-2 w-full text-white bg-gray-900" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
-                <option value="">State</option>
+            <h2 className="text-lg font-bold mb-4">Register DocumentType</h2>
+            <Input text="Name" value={register?.name || ""} onChange={(e) => setRegister({ ...register, name: e.target.value })} />
+            <Input text="Description" value={register?.description || ""} onChange={(e) => setRegister({ ...register, description: e.target.value })} />
+            <Select text="State" value={register?.state?.toString() || ""} onChange={(e) => setRegister({ ...register, state: +e.target.value })}>
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>
-            </select>
+            </Select>
 
-            <Button text={"Save DocumentType"} color="primary" type="submit" className="w-full"/>
+            <Button text={"Save"} color="primary" type="submit" className="w-full"/>
         </form>
     );
 }
