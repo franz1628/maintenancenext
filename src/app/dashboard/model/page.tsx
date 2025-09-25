@@ -6,50 +6,53 @@ import ModelForm from "@/features/model/components/form";
 import ModelList from "@/features/model/components/list";
 import ModelApi from "@/features/model/services/model.api";
 import { Model, ModelCreate, ModelInitial, ModelUpdate } from "@/features/model/types/model.types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 export default  function ModelPage() {
-    const [models, setModels] = useState<Model[]>([]);
-    const [brands, setBrands] = useState<Brand[]>([]);
     const [id, setId] = useState<number>(0);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [idDelete, setIdDelete] = useState<number>(0);
+    const queryClient = useQueryClient();
 
-    useEffect( () => {
-        load();
-    }, []);
+    const {data:models, isLoading, error} = useQuery({
+        queryKey: ['models'],
+        queryFn: ModelApi().get
+    });
 
-    const load = async () => {
-        const data = await ModelApi().get();
-        const brandData = await BrandApi().get();
-        setBrands(brandData);
-        setModels(data);
-    }
+    const brands = useQuery({
+        queryKey: ['brands'],
+        queryFn: BrandApi().get
+    });
+
+    const saveMutation = useMutation({
+        mutationFn: (model: ModelCreate | ModelUpdate) => {
+            if(id === 0) {
+                return ModelApi().create(model as ModelCreate);
+            } else {
+                const { created_at, updated_at, id, brand, ...update } = model as Model;
+                return ModelApi().update(id, update);
+            }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['models'] });
+        }
+    });
+
+    const deleteMutation = useMutation({
+        mutationFn: (id: number) => ModelApi().deleteModel(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['models'] });
+        }
+    });
 
     const [model, setModel] = useState<ModelCreate | ModelUpdate>(ModelInitial);
 
     const onSubmit = async (modelPa: ModelCreate | ModelUpdate) => {
-        if(id){
-            const { created_at, updated_at, id, brand, ...update } = modelPa as Model;
-            await ModelApi().update(id, update);
-            Swal.fire({
-                title: "Success",
-                text: "Model updated successfully",
-                icon: "success",
-            });
-        } else {
-            await ModelApi().create(modelPa as ModelCreate);
-            Swal.fire({
-                title: "Success",
-                text: "Model created successfully",
-                icon: "success",
-            });
-        }
-
+        await saveMutation.mutateAsync(modelPa);
         setModel(ModelInitial);
         setId(0);
-        load();
     }
 
     const handleDelete = async (id: number) => {
@@ -68,7 +71,7 @@ export default  function ModelPage() {
         });
 
         if (result.isConfirmed) {
-            await ModelApi().deleteModel(id);
+            await deleteMutation.mutateAsync(id);
             Swal.fire({
                 title: "Deleted!",
                 text: "Your Model has been deleted.",
@@ -76,7 +79,6 @@ export default  function ModelPage() {
             });
             setIdDelete(0);
             setShowModal(false);
-            load();
         }
     }
 
@@ -91,10 +93,10 @@ export default  function ModelPage() {
             <hr  className="my-4" />
             <div className="grid grid-cols-4 md:grid-cols-4 gap-4 mb-4">
                 <div>
-                    <ModelForm model={model} onSubmit={onSubmit} brands={brands} />
+                    <ModelForm model={model} onSubmit={onSubmit} brands={brands.data || []} isLoading={saveMutation.isPending} />
                 </div>
                 <div className="col-span-3">
-                    <ModelList models={models} onEdit={onEdit} onDelete={handleDelete} />
+                    <ModelList models={models || []} onEdit={onEdit} onDelete={handleDelete} isLoading={isLoading} />
                 </div>
             </div>
 
