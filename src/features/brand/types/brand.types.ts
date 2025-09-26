@@ -3,6 +3,7 @@ export interface Brand {
     name: string;
     description?: string;
     logo?: string;
+    photo?: string;
     state: number;
     created_at: string;
     updated_at: string;

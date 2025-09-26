@@ -42,8 +42,19 @@ export default  function BrandPage() {
         }
     });
 
-    const onSubmit = async (modelPa: BrandCreate | BrandUpdate) => {
-        await saveMutation.mutateAsync(modelPa);
+    const uploadMutation = useMutation({
+        mutationFn: ({formData, id}: {formData: FormData, id:number}) => BrandApi().uploadLogo(formData, id)
+    });
+
+    const onSubmit = async (modelPa: BrandCreate | BrandUpdate, image: File | null) => {
+        const newModel = await saveMutation.mutateAsync(modelPa);
+
+        if (image && newModel.id) {
+            const formData = new FormData();
+            formData.append("file", image);
+            await uploadMutation.mutateAsync({  formData, id: newModel.id });
+        }
+
         Swal.fire({
             title: "Success",
             text: id ? "Brand updated successfully" : "Brand created successfully",

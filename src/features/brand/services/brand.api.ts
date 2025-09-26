@@ -31,11 +31,21 @@ export default function BrandApi() {
         return response.data;
     };
 
+    const uploadLogo = async (formData: FormData, id: number) => {
+        const response = await apiFetch<BrandResponse>(`/brand/${id}/uploadLogo`, {
+            method: "POST",
+            body: formData
+        });
+
+        return response.data;
+    };
+
     return {
         get,
         create,
         update,
-        deleteModel
+        deleteModel,
+        uploadLogo
     };
 }
   

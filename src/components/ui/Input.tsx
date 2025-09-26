@@ -1,6 +1,6 @@
 interface InputProps {
     text: string;
-    type?: "text" | "password" | "email" | "number" | "date" | "datetime-local";
+    type?: "text" | "password" | "email" | "number" | "date" | "datetime-local" | "file";
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     className?: string;
     value?: string | number;
