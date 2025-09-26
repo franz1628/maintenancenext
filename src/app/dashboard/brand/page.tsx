@@ -47,6 +47,7 @@ export default  function BrandPage() {
     });
 
     const onSubmit = async (modelPa: BrandCreate | BrandUpdate, image: File | null) => {
+        setModel(modelPa);
         const newModel = await saveMutation.mutateAsync(modelPa);
 
         if (image && newModel.id) {
@@ -60,8 +61,8 @@ export default  function BrandPage() {
             text: id ? "Brand updated successfully" : "Brand created successfully",
             icon: "success",
         });
-        setModel(BrandInitial);
         setId(0);
+        setModel(BrandInitial);
  
     }
 
@@ -104,7 +105,7 @@ export default  function BrandPage() {
             <hr  className="my-4" /> 
             <div className="grid grid-cols-12 md:grid-cols-12 gap-2 mb-4">
                 <div className="col-span-4">
-                    <BrandForm model={model} onSubmit={onSubmit} isLoading={saveMutation.isPending} />
+                    <BrandForm model={model} onSubmit={onSubmit} isLoading={saveMutation.isPending}/>
                 </div>
                 <div className="col-span-8">
                     <BrandList models={data || []} onEdit={onEdit} onDelete={handleDelete} isLoading={isLoading} />

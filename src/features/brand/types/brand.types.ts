@@ -14,6 +14,7 @@ export const BrandInitial: BrandCreate = {
     description: '',
     logo: '',
     state: 1,
+    photo: ''
 };
 
 export type BrandCreate = Omit<Brand, 'id' | 'created_at' | 'updated_at'>;
