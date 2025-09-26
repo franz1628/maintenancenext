@@ -3,6 +3,7 @@ export interface Brand {
     name: string;
     description?: string;
     logo?: string;
+    photo?: string;
     state: number;
     created_at: string;
     updated_at: string;
@@ -13,6 +14,7 @@ export const BrandInitial: BrandCreate = {
     description: '',
     logo: '',
     state: 1,
+    photo: ''
 };
 
 export type BrandCreate = Omit<Brand, 'id' | 'created_at' | 'updated_at'>;

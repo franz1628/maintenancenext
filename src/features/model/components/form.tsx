@@ -10,13 +10,16 @@ interface ModelFormProps {
     model: ModelCreate | ModelUpdate;
     onSubmit: (model: ModelCreate | ModelUpdate) => void;
     brands: Brand[];
+    isLoading: boolean;
 }
 
 export default function ModelForm(props: ModelFormProps) {
-    const { onSubmit, model, brands } = props;
+    const { onSubmit, model, brands, isLoading } = props;
     const [register, setRegister] = useState<ModelCreate | ModelUpdate>(model);
 
     useEffect(() => {
+        console.log(model);
+        
         setRegister(model);
     }, [model]);
 
@@ -45,7 +48,7 @@ export default function ModelForm(props: ModelFormProps) {
                 <option value="0">Inactive</option>
             </Select>
 
-            <Button text={"Brand"} color="primary" type="submit" className="w-full"/>
+            <Button text={isLoading ? "Loading..." : "Submit"} color="primary" type="submit" className="w-full" disabled={isLoading} />
         </form>
     );
 }

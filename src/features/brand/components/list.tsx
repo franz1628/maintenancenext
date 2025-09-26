@@ -39,8 +39,8 @@ export default function BrandList(props: BrandListProps) {
                             </td>
                             {/* input group */}
                             <td className="border border-gray-300 px-4 py-2 flex">
-                                <Button text="Edit" color="info" onClick={() => onEdit(model.id,model)} />
-                                <Button text="Delete" color="danger" onClick={() => onDelete(model.id)} className="ml-2" />
+                                <Button icon="edit" text="Edit" color="info" onClick={() => onEdit(model.id,model)} />
+                                <Button icon="delete" text="Delete" color="danger" onClick={() => onDelete(model.id)} className="ml-2" />
                             </td>
                         </tr>
                     ))}

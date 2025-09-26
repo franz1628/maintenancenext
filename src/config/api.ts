@@ -45,9 +45,11 @@ export async function apiFetch<T>(
   const res = await fetch(`${ENV.API_URL}${endpoint}`, {
     ...options,
     headers: {
-      "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...(options.headers || {}),
+      ...(options.body instanceof FormData
+        ? {}
+        : { "Content-Type": "application/json" }),
+      ...options.headers,
     },
   });
 

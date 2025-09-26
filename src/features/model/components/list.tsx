@@ -6,10 +6,11 @@ interface ModelListProps {
     models: Model[];
     onEdit: (id: number, model: ModelUpdate) => void;
     onDelete: (id: number) => void;
+    isLoading?: boolean;
 }
 
 export default function ModelList(props: ModelListProps) {
-    const {models, onEdit, onDelete} = props;
+    const {models, onEdit, onDelete, isLoading} = props;
     return (
         <div>
             <h2>Model List</h2>
@@ -25,7 +26,7 @@ export default function ModelList(props: ModelListProps) {
                     </tr>
                 </thead>
                 <tbody>
-                    {models.map((model) => (
+                    {isLoading ? <tr><td colSpan={6} className="text-center py-4">Loading...</td></tr> : models.map((model) => (
                         <tr key={model.id}>
                             <td className="border border-gray-300 px-4 py-2">{model.id}</td>
                             <td className="border border-gray-300 px-4 py-2">{model.name}</td>
