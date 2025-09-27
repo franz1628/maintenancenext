@@ -32,12 +32,11 @@ export default function BrandList(props: BrandListProps) {
                             <td className="border border-gray-300 px-4 py-2">{model.id}</td>
                             <td className="border border-gray-300 px-4 py-2">{model.name}</td>
                             <td className="border border-gray-300 px-4 py-2">{model.description}</td>
-                            <td className="border border-gray-300 px-4 py-2">{model.created_at.substring(0, 10)}</td>
-                            <td className="border border-gray-300 px-4 py-2">{model.updated_at.substring(0, 10)}</td>
+                            <td className="border border-gray-300 px-4 py-2">{new Date(model.created_at).toLocaleDateString()}</td>
+                            <td className="border border-gray-300 px-4 py-2">{new Date(model.updated_at).toLocaleDateString()}</td>
                             <td className="border border-gray-300 px-4 py-2">
                                 {model.state === 1 ? <label className="text-green-500">Active</label> : <label className="text-red-500">Inactive</label>}
                             </td>
-                            {/* input group */}
                             <td className="border border-gray-300 px-4 py-2 flex">
                                 <Button icon="edit" text="Edit" color="info" onClick={() => onEdit(model.id,model)} />
                                 <Button icon="delete" text="Delete" color="danger" onClick={() => onDelete(model.id)} className="ml-2" />
