@@ -1,6 +1,3 @@
-import { CloudArrowDownIcon, EyeIcon, MagnifyingGlassCircleIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/16/solid";
-import { table } from "console";
-
 interface TableProps {
     className?: string;
     children?: React.ReactNode;

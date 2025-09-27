@@ -14,7 +14,7 @@ interface BrandListProps {
 
 export default function BrandList(props: BrandListProps) {
     const {models, onEdit, onDelete, isLoading} = props;
-    const URL_UPLOADS = process.env.NEXT_PUBLIC_URL_UPLOADS || "http://localhost:3000/uploads";
+    const URL_BACKEND = process.env.API_URL_BACKEND || "http://localhost:3000/";
     return (
         <div>
             <Table className="min-w-full border-collapse border border-gray-200">
@@ -37,7 +37,17 @@ export default function BrandList(props: BrandListProps) {
                             <td className="border border-gray-300 px-4 py-2">{model.name}</td>
                             <td className="border border-gray-300 px-4 py-2">{model.description}</td>
                             <td className="border border-gray-300 px-4 py-2">
-                                <Image value={URL_UPLOADS + "/brand/" + model.photo} className="w-16 h-16 object-cover" modal={true} />
+                                {
+                                    model.photo && 
+                                    <Image 
+                                // Construye una URL segura a partir de la URL base (URL_UPLOADS)
+                                // y codifica el nombre del archivo para evitar errores.
+                                value={new URL(`uploads/brand/${encodeURIComponent(model.photo)}`, URL_BACKEND).toString()} 
+                                className="w-16 h-16 object-cover" 
+                                modal={true} 
+                                />
+                                }
+                                
                             </td>
                             <td className="border border-gray-300 px-4 py-2">{new Date(model.created_at).toLocaleDateString()}</td>
                             <td className="border border-gray-300 px-4 py-2">{new Date(model.updated_at).toLocaleDateString()}</td>

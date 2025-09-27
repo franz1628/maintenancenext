@@ -1,5 +1,3 @@
-import { CloudArrowDownIcon, EyeIcon, MagnifyingGlassCircleIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/16/solid";
-
 interface BadgeProps {
     color: "primary" | "success" | "warning" | "info" | "danger" | "secondary";
     children?: React.ReactNode;

@@ -30,7 +30,7 @@ export default function Image({ text, className, value, modal=false }: ImageProp
                         <XMarkIcon className="h-20 w-20 text-white cursor-pointer mb-2" onClick={() => setShowModal(false)} />
                     </div>
                     <div className="bg-white p-4 rounded">
-                        <img src={value?.toString() || ""} alt={text} className="md:h-150 xs:h-30" onError={(e) => { e.currentTarget.src = "/images/placeholder.png"; }} />
+                        <img src={value?.toString() || ""} alt={text} className="md:h-96 xs:h-32" onError={(e) => { e.currentTarget.src = "/images/placeholder.png"; }} />
                     </div>
                 </div>
             }
