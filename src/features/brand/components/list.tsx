@@ -16,7 +16,7 @@ export default function BrandList(props: BrandListProps) {
     const {models, onEdit, onDelete, isLoading} = props;
     
     if (!process.env.NEXT_PUBLIC_API_URL_BACKEND) {
-        throw new Error("API_URL_BACKEND environment variable is not set. Please configure it before running the application.");
+        throw new Error("NEXT_PUBLIC_API_URL_BACKEND environment variable is not set. Please configure it before running the application.");
     }
     const URL_BACKEND = process.env.NEXT_PUBLIC_API_URL_BACKEND;
     return (

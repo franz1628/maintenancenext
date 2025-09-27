@@ -108,11 +108,11 @@ export default  function BrandPage() {
         <div>
             <h1 className="text-2xl font-bold">Brand Page</h1>
             <hr  className="my-4" /> 
-            <div className="grid md:grid-cols-12 xs:grid-cols-12 gap-2 mb-4">
-                <div className="md:col-span-4 xs:col-span-12">
+            <div className="grid md:grid-cols-12 sm:grid-cols-12 gap-2 mb-4">
+                <div className="md:col-span-4 sm:col-span-12">
                     <BrandForm model={model} onSubmit={onSubmit} isLoading={saveMutation.isPending} onReset={handleReset}/>
                 </div>
-                <div className="md:col-span-8 xs:col-span-12 overflow-x-auto">
+                <div className="md:col-span-8 sm:col-span-12 overflow-x-auto">
                     <BrandList models={data || []} onEdit={onEdit} onDelete={handleDelete} isLoading={isLoading} />
                 </div>
             </div>
