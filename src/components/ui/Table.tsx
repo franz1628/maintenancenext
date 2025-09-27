@@ -8,7 +8,7 @@ export default function Table({ className, children }: TableProps) {
     let tableClassName = 'min-w-full divide-y divide-gray-200';
 
     return (
-        <table className={tableClassName + ' ' + className}>
+        <table className={`${tableClassName}${className ? ' ' + className : ''}`}>
             {children}
         </table>
     );

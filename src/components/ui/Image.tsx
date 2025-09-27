@@ -21,7 +21,7 @@ export default function Image({ text, className, value, modal=false }: ImageProp
                 </div>
                 :
                 <div className="w-full grid grid-cols-6 cursor-pointer">
-                    <img src={value?.toString() || ""} alt={text} className={defaultClass + " col-span-6 " + className} onError={(e) => { e.currentTarget.src = "/images/placeholder.png"; }} onClick={() => setShowModal(modal)} />
+                    <img src={value?.toString() || ""} alt={'Not found'} className={defaultClass + " col-span-6 " + className} onError={(e) => { e.currentTarget.src = "/images/placeholder.png"; }} onClick={() => setShowModal(modal)} />
                 </div>
             }
             {showModal && 

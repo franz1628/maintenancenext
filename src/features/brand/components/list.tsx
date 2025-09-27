@@ -14,7 +14,11 @@ interface BrandListProps {
 
 export default function BrandList(props: BrandListProps) {
     const {models, onEdit, onDelete, isLoading} = props;
-    const URL_BACKEND = process.env.API_URL_BACKEND || "http://localhost:3000/";
+    
+    if (!process.env.NEXT_PUBLIC_API_URL_BACKEND) {
+        throw new Error("API_URL_BACKEND environment variable is not set. Please configure it before running the application.");
+    }
+    const URL_BACKEND = process.env.NEXT_PUBLIC_API_URL_BACKEND;
     return (
         <div>
             <Table className="min-w-full border-collapse border border-gray-200">
@@ -40,8 +44,6 @@ export default function BrandList(props: BrandListProps) {
                                 {
                                     model.photo && 
                                     <Image 
-                                // Construye una URL segura a partir de la URL base (URL_UPLOADS)
-                                // y codifica el nombre del archivo para evitar errores.
                                 value={new URL(`uploads/brand/${encodeURIComponent(model.photo)}`, URL_BACKEND).toString()} 
                                 className="w-16 h-16 object-cover" 
                                 modal={true} 
