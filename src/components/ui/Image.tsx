@@ -1,7 +1,8 @@
+import { XMarkIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 
 interface ImageProps {
-    text: string;
+    text?: string;
     className?: string;
     value?: string | number;
     modal?: boolean;
@@ -13,14 +14,23 @@ export default function Image({ text, className, value, modal=false }: ImageProp
 
     return (
         <div>
-            <div className="mb-4 w-full grid grid-cols-6">
-                <label htmlFor="" className="col-span-2 mt-2">{text}</label>
-                <img src={value?.toString() || ""} alt={text} className={defaultClass + " col-span-4 " + className} onError={(e) => { e.currentTarget.src = "/images/placeholder.png"; }} onClick={() => setShowModal(modal)} />
-            </div>
+            {text ?
+                <div className="mb-4 w-full grid grid-cols-6 cursor-pointer">
+                    <label htmlFor="" className="col-span-2 mt-2">{text}</label>
+                    <img src={value?.toString() || ""} alt={text} className={defaultClass + " col-span-4 " + className} onError={(e) => { e.currentTarget.src = "/images/placeholder.png"; }} onClick={() => setShowModal(modal)} />
+                </div>
+                :
+                <div className="w-full grid grid-cols-6 cursor-pointer">
+                    <img src={value?.toString() || ""} alt={text} className={defaultClass + " col-span-6 " + className} onError={(e) => { e.currentTarget.src = "/images/placeholder.png"; }} onClick={() => setShowModal(modal)} />
+                </div>
+            }
             {showModal && 
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowModal(false)}>
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="absolute top-4 right-4">
+                        <XMarkIcon className="h-20 w-20 text-white cursor-pointer mb-2" onClick={() => setShowModal(false)} />
+                    </div>
                     <div className="bg-white p-4 rounded">
-                        <img src={value?.toString() || ""} alt={text} className="w-full h-auto" onError={(e) => { e.currentTarget.src = "/images/placeholder.png"; }} />
+                        <img src={value?.toString() || ""} alt={text} className="md:h-150 xs:h-30" onError={(e) => { e.currentTarget.src = "/images/placeholder.png"; }} />
                     </div>
                 </div>
             }
