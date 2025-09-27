@@ -1,25 +1,22 @@
-'use client';
+"use client";
+
 import AuthForm from "@/features/auth/components/form";
-import { useRouter } from "next/navigation";
-import { use, useEffect } from "react";
+import { useEffect, useState } from "react";
+
 
 export default function Login() {
-  const router = useRouter();
+  const [hasToken, setHasToken] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    const token = user ? JSON.parse(user).access_token : null;
+    const token = localStorage.getItem("token");
+    setHasToken(!!token);
+  }, []);
 
-    if (token) {
-      router.push("/dashboard");
-    }
-  }, [router]);
-
-
+  if (hasToken === null) return null; // evita parpadeo en SSR
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {!localStorage.token && <AuthForm />}
+      {!hasToken && <AuthForm />}
       <hr />
     </main>
   );

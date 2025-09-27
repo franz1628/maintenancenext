@@ -21,7 +21,7 @@ export default function RootLayout({
         !isloggedIn &&
           <div>
               <header>
-                  <h1 className="text-2xl font-bold text-center my-4">Login</h1>
+                  <h1 className="text-4xl font-bold text-center my-4">Login</h1>
                   <hr />
               </header>
               {children}
