@@ -14,27 +14,6 @@ function getToken() {
   return localStorage.getItem("token");
 }
 
-async function refreshToken(): Promise<string | null> {
-  const refresh = localStorage.getItem("refreshToken");
-  if (!refresh) return null;
-
-  try {
-    const res = await fetch(`${ENV.API_URL}/auth/refresh`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refreshToken: refresh }),
-    });
-
-    if (!res.ok) return null;
-
-    const data = await res.json();
-    localStorage.setItem("token", data.token);
-    return data.token;
-  } catch {
-    return null;
-  }
-}
-
 export async function apiFetch<T>(
   endpoint: string,
   options: RequestInit = {},
@@ -71,7 +50,8 @@ export async function apiFetch<T>(
       text: `API Error ${res.status}: ${resError.detail}`,
       icon: "error",
     });
-    throw new Error(`APIg Error ${res.status}: ${resError.detail}`);
+
+    throw new Error(`API Error ${res.status}: ${resError.detail}`);
   }
 
   

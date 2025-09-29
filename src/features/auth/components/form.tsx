@@ -1,19 +1,20 @@
 "use client";
-import { use, useState } from "react";
+import * as React from "react";
 import useAuth from "../hooks/useAuth";
 import { useRouter } from "next/navigation";
 import Input from "@/components/ui/Input";
 import { LockClosedIcon } from "@heroicons/react/16/solid";
 
 export default function AuthForm() {
-  const { email, setEmail, password, setPassword, postLogin, loading, success } = useAuth();
+  const { email, setEmail, password, setPassword, postLogin } = useAuth();
   const router = useRouter();
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await postLogin(email, password);
+    const { data } = await postLogin.mutateAsync();
 
-    if(res){
+    if(data?.access_token) {
         router.push("/dashboard");
     } 
   };
@@ -34,7 +35,7 @@ export default function AuthForm() {
         onChange={(e) => setPassword(e.target.value)}
         className="border p-2"
       />
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded flex items-center justify-center cursor-pointer hover:bg-blue-600" disabled={loading}>
+      <button type="submit" className="bg-blue-500 text-white p-2 rounded flex items-center justify-center cursor-pointer hover:bg-blue-600" disabled={postLogin.isPending}>
         <LockClosedIcon className="h-6 w-6 text-white inline-block mr-2" />
         Login
       </button>

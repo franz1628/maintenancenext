@@ -23,6 +23,7 @@ export default function RootLayout({
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     router.push("/login");
   };
 
