@@ -1,4 +1,5 @@
 "use client";
+import * as React from "react";
 import useAuth from "../hooks/useAuth";
 import { useRouter } from "next/navigation";
 import Input from "@/components/ui/Input";
@@ -11,7 +12,7 @@ export default function AuthForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { data} = await postLogin.mutateAsync();
+    const { data } = await postLogin.mutateAsync();
 
     if(data?.access_token) {
         router.push("/dashboard");
